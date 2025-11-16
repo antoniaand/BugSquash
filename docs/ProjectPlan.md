@@ -4,13 +4,13 @@
 
 ## 1. General Objective
 
-[cite_start]To develop a **full-stack application** (SPA + RESTful Backend) for bug management, meeting all technological constraints and minimum functionality requirements.
+To develop a **full-stack application** (SPA + RESTful Backend) for bug management, meeting all technological constraints and minimum functionality requirements.
 
 ---
 
 ## 2. Technology Stack (Constraints and Choices)
 
-[cite_start]Acest tabel detaliază alegerea tehnologiilor pentru fiecare componentă a aplicației.
+This table details the technology choices for each component of the application.
 
 | Component | Required Technology | Chosen Technology |
 | :---: | :---: | :---: |
@@ -24,11 +24,11 @@
 
 ## 3. Timeline and Deliverables
 
-[cite_start]The project is divided into three stages, aligning with the required delivery dates.
+The project is divided into three stages, aligning with the required delivery dates.
 
 ### Stage 1: Documentation and Setup (Deadline: 16.11.2025)
 
-[cite_start]Deliverable: `SPECIFICATII.md`, `PLAN_PROIECT.md` files, and an initialized Git repository.
+Deliverable: `SPECIFICATII.md`, `PLAN_PROIECT.md` files, and an initialized Git repository.
 
 | # | Task | Status |
 | :-: | :---: | :---: |
@@ -44,7 +44,7 @@
 
 ### Stage 2: Functional RESTful Service (Deadline: 06.12.2025)
 
-[cite_start]Deliverable: Complete functional backend code, accessing the DB and External Service, with clear running instructions.
+Deliverable: Complete functional backend code, accessing the DB and External Service, with clear running instructions.
 
 | # | Task | Priority |
 | :-: | :---: | :---: |
@@ -59,7 +59,7 @@
 
 ### Stage 3: Complete Application (Deadline: Last Seminar)
 
-[cite_start]Deliverable: Complete Front-end (SPA) application, integrated with the Backend, ready for demo.
+Deliverable: Complete Front-end (SPA) application, integrated with the Backend, ready for demo.
 
 | # | Task | Priority |
 | :-: | :---: | :---: |
