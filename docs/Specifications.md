@@ -1,4 +1,4 @@
-# Detailed Specifications - Bug Tracking Web Application
+# Detailed Specifications - BUG SQUASH
 
 ## 1. Relational Data Model (Database/ORM)
 
@@ -12,15 +12,14 @@ This model defines the structure of data stored in the relational database, to b
 | | email | String | UNIQUE, used for authentication |
 | | password\_hash | String | Hashed password |
 | | name | String | Full name of the user |
-| | role | Enum/String | Default role: 'STUDENT' |
+| | role | Enum/String | Global role: 'STUDENT', 'ADMIN', etc. (Default: 'STUDENT') |
 | Project | id | UUID/INT | PK |
 | | name | String | Project name |
 | | description | Text | Project description |
 | | repository\_url | String | Link to the Git repository (GitHub/GitLab) |
-| ProjectMember | id | UUID/INT | PK. Join Table (Many-to-Many) |
-| | project\_id | INT | Foreign Key (FK) to Project.id |
-| | user\_id | INT | FK to User.id |
-| | is\_manager | Boolean | TRUE if the user is a Project Member (PM), FALSE if they are a Tester (TST). |
+| ProjectMember | project\_id | INT | Primary Key (PK) & Foreign Key (FK) to Project.id |
+| | user\_id | INT | PK & FK to User.id |
+| | role | Enum/String | 'MANAGER' or 'TESTER' (Defines role within the project) |
 | Bug | id | UUID/INT | PK |
 | | project\_id | INT | FK to Project.id |
 | | reporter\_id | INT | FK to User.id (reported by) |
@@ -57,8 +56,9 @@ The RESTful interface will be built using Node.js and Express. All routes will s
 
 | Objective | HTTP Method | URI (Route) | Permissions |
 | :---: | :---: | :---: | :---: |
-| Create Project | POST | /api/projects | PM |
-| Modify Project | PUT | /api/projects/:id | PM |
+| Create Project | POST | /api/projects | AUTHENTICATED (User becomes MANAGER) |
+| Get Project Details | GET | /api/projects/:id | PROJECT\_MEMBER |
+| Modify Project | PUT | /api/projects/:id | PROJECT\_MANAGER |
 | List Projects | GET | /api/projects | AUTHENTICATED |
 | Register as Tester | POST | /api/projects/:id/testers | AUTHENTICATED (non-member) |
 
@@ -66,10 +66,10 @@ The RESTful interface will be built using Node.js and Express. All routes will s
 
 | Objective | HTTP Method | URI (Route) | Permissions |
 | :---: | :---: | :---: | :---: |
-| Register Bug | POST | /api/bugs | TST (only in projects they are a tester for) |
-| List Project Bugs | GET | /api/projects/:projectId/bugs | PM, TST |
-| Assign Bug (to self) | PATCH | /api/bugs/:bugId/assign | PM |
-| Update Status | PATCH | /api/bugs/:bugId/status | PM |
+| Register Bug | POST | /api/bugs | TESTER |
+| List Project Bugs | GET | /api/projects/:projectId/bugs | PROJECT\_MEMBER |
+| Assign Bug (to self) | PATCH | /api/bugs/:bugId/assign | PROJECT\_MANAGER |
+| Update Status | PATCH | /api/bugs/:bugId/status | PROJECT\_MANAGER |
 
 ---
 
@@ -85,19 +85,19 @@ External API Route (GitHub Example):
 
 * Endpoint: GET /repos/{owner}/{repo}/commits/{sha}
 * Usage:
-    1.  When a **TST** registers a **Bug**, the backend extracts the owner, repo, and sha from the `opened_commit_link`.
-    2.  The backend makes a call to the **GitHub API** to verify the commit exists and retrieve details like the commit date.
-    3.  The same logic applies when updating the status with the `resolution_commit_link`.
+    1.  When a **TESTER** registers a **Bug**, the backend extracts the owner, repo, and sha from the `opened_commit_link`.
+    2.  The backend makes a call to the **GitHub API** to verify the commit exists and retrieve details like the commit date.
+    3.  The same logic applies when updating the status with the `resolution_commit_link`.
 
 ---
 
 ## 4. Permissions System (Authorization)
 
-Permissions will be managed based on the user's role within the specific project (`is_manager` attribute in the **ProjectMember** table).
+Permissions will be managed based on the user's defined role within the specific project (`role` attribute in the **ProjectMember** table).
 
 | Action | Permission Condition |
 | :---: | :---: |
-| Register Project | User is creating the project and is set as a Project Member (`is_manager` = TRUE). |
-| Add Bug | User is registered as a Tester (`is_manager` = FALSE) in the project. |
-| View Bugs/Projects | User is a member (PM or TST) of the project. |
-| Assign/Update Bug | User is a Project Member (`is_manager` = TRUE) in the project. |
+| Register Project | User is creating the project and is set as a **MANAGER** for that project. |
+| Add Bug | User has the **TESTER** role for the project. |
+| View Bugs/Projects | User has the **MANAGER** or **TESTER** role for the project (**PROJECT\_MEMBER**). |
+| Assign/Update Bug | User has the **MANAGER** role for the project (**PROJECT\_MANAGER**). |

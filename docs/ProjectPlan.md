@@ -1,4 +1,4 @@
-# Project Plan - Bug Tracker Application
+# Project Plan - BUG SQUASH
 
 ---
 
@@ -28,13 +28,13 @@ The project is divided into three stages, aligning with the required delivery da
 
 ### Stage 1: Documentation and Setup (Deadline: 16.11.2025)
 
-Deliverable: `SPECIFICATII.md`, `PLAN_PROIECT.md` files, and an initialized Git repository.
+Deliverable: **`Specifications.md`**, **`ProjectPlan.md`** files, and an initialized Git repository.
 
 | # | Task | Status |
 | :-: | :---: | :---: |
 | 1.1 | Git Set-up: Create GitHub/GitLab repository, initialize local Git. | Completed |
 | 1.2 | Project Structure: Create `backend/`, `frontend/`, `docs/` folders. | Completed |
-| 1.3 | Data Modeling: Define entities, attributes, and relationships (see `SPECIFICATII.md`). | PENDING |
+| 1.3 | Data Modeling: Define entities, attributes, and relationships (see **`Specifications.md`**). | PENDING |
 | 1.4 | API Design: Define RESTful routes (URIs, HTTP Methods, Permissions). | PENDING |
 | 1.5 | External Service: Select and specify integration method with GitHub/GitLab API. | PENDING |
 | 1.6 | Planning: Write this project plan, select technology stack. | PENDING |
